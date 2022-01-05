@@ -40,6 +40,9 @@ run: venv  ## 🏃 Run the server locally using Python & Flask
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& python src/run.py
 
+run-docker: venv  ## 🏃 Run the server locally using Python & Flask
+	docker run --rm -d -it -p 5000:5000 ghcr.io/benc-uk/python-demoapp:latest
+
 deploy:  ## 🚀 Deploy to Azure Web App 
 	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table
 	az deployment group create --template-file deploy/webapp.bicep \
