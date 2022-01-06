@@ -9,7 +9,7 @@ def test_page_content(client):
     resp = client.get("/")
 
     assert resp.status_code == 200
-    assert b"Coleman" not in resp.data
+    assert b"Coleman" in resp.data
 
 
 def test_info(client):
