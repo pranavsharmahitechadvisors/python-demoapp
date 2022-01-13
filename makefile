@@ -1,6 +1,6 @@
 # Used by `image`, `push` & `deploy` targets, override as required
-IMAGE_REG ?= ghcr.io
-IMAGE_REPO ?= benc-uk/python-demoapp
+IMAGE_REG ?= pranav165
+IMAGE_REPO ?= kaholo
 IMAGE_TAG ?= latest
 
 # Used by `deploy` target, sets Azure webap defaults, override as required
@@ -41,7 +41,7 @@ run: venv  ## 🏃 Run the server locally using Python & Flask
 	&& python src/run.py
 
 run-docker: venv  ## 🏃 Run the server locally using Python & Flask
-	docker run --rm -d -it -p 5000:5000 ghcr.io/benc-uk/python-demoapp:latest
+	docker run --rm -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
 deploy:  ## 🚀 Deploy to Azure Web App 
 	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table
