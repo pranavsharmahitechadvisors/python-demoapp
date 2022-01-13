@@ -5,7 +5,7 @@ import json
 def test_api_process(client):
     resp = client.get("/api/process")
 
-    assert resp.status_code == 201
+    assert resp.status_code == 200
     assert resp.headers["Content-Type"] == "application/json"
     resp_payload = json.loads(resp.data)
     assert len(resp_payload["processes"]) > 0
