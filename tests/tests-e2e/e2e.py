@@ -1,4 +1,4 @@
-from utils.driverfactory import make_driver
+from utils.driverclass import driverClass
 from selenium.webdriver.common.by import By
 import time
 
@@ -20,7 +20,7 @@ def check_process_info(driver):
 
 if __name__ == "__main__":
     print("Initializing chromedriver")
-    driver = make_driver(remote=True)
+    driver = driverClass.register_driver()
     print("Running E2E test to check the processes information")
     open_url(driver, url="http://localhost:5000/monitor")
     assert check_process_info(driver) > 10
