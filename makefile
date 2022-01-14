@@ -59,6 +59,10 @@ test: venv  ## 🎯 Unit tests for Flask app
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& pytest -v
 
+test-e2e: venv  ## 🎯 Unit tests for Flask app
+	. $(SRC_DIR)/.venv/bin/activate \
+	&& python tests/tests-e2e/e2e.py
+
 test-report: venv  ## 🎯 Unit tests for Flask app (with report output)
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& pytest -v --junitxml=test-results.xml
