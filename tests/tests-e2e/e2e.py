@@ -6,7 +6,9 @@ processes = "//*[@id='process_tab']//tr"
 
 
 def open_url(driver, url=None):
+    print("opening url {}".format(url))
     driver.get(url)
+    print("Waiting for 30 seconds {}".format(url))
     time.sleep(30)
 
 
@@ -17,7 +19,8 @@ def check_process_info(driver):
 
 
 if __name__ == "__main__":
-    driver = make_driver(remote=False)
+    print("Initializing chromedriver")
+    driver = make_driver(remote=True)
     print("Running E2E test to check the processes information")
     open_url(driver, url="http://localhost:5000/monitor")
     assert check_process_info(driver) > 10
