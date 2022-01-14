@@ -2,20 +2,19 @@ import os
 import platform
 import logging
 from selenium import webdriver
-from conftest import get_project_root
 
-PROJECT_ROOT = get_project_root()
+PROJECT_ROOT = os.path.join(os.path.dirname(__file__))
 
 plt = platform.system()
 
 if plt == "Windows":
-    ChromeDriverExePath = os.path.join(PROJECT_ROOT, "tests", "tests-e2e", 'utils', "Chromedrivers", "Windows",
+    ChromeDriverExePath = os.path.join(PROJECT_ROOT,  "Chromedrivers", "Windows",
                                        "chromedriver.exe")
 elif plt == "Linux":
-    ChromeDriverExePath = os.path.join(PROJECT_ROOT, "tests", "tests-e2e", 'utils', "Chromedrivers", "Linux",
+    ChromeDriverExePath = os.path.join(PROJECT_ROOT, "Chromedrivers", "Linux",
                                        "chromedriver")
 elif plt == "Darwin":
-    ChromeDriverExePath = os.path.join(PROJECT_ROOT, "tests", "tests-e2e", 'utils', "Chromedrivers", "Mac",
+    ChromeDriverExePath = os.path.join(PROJECT_ROOT, "Chromedrivers", "Mac",
                                        "chromedriver")
 else:
     logging.exception("Unsupported Platform")
