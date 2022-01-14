@@ -41,7 +41,7 @@ run: venv  ## 🏃 Run the server locally using Python & Flask
 	&& python src/run.py
 
 run-docker: venv  ## 🏃 Run the server locally using Python & Flask
-	docker run --rm --net host -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
+	docker run --rm -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
 deploy:  ## 🚀 Deploy to Azure Web App 
 	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table

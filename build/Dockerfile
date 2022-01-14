@@ -12,7 +12,5 @@ COPY $srcDir/run.py .
 COPY $srcDir/app ./app
 
 EXPOSE 5000
-ENV FLASK_APP=run.py
-ENTRYPOINT [ "flask"]
 
-CMD ["run", "--host", "0.0.0.0"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]
