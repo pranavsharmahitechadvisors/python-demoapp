@@ -9,7 +9,7 @@ AZURE_REGION ?= uksouth
 AZURE_SITE_NAME ?= pythonapp-$(shell git rev-parse --short HEAD)
 
 # Used by `test-api` target
-TEST_HOST ?= localhost:5000
+TEST_HOST ?= 127.0.01:5000
 
 # Don't change
 SRC_DIR := src
@@ -40,8 +40,11 @@ run: venv  ## 🏃 Run the server locally using Python & Flask
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& python src/run.py
 
-run-docker: venv  ## 🏃 Run the server locally using Python & Flask
-	docker run --rm -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
+run-docker:venv  ## 🏃 Run the server locally using Python & Flask
+    docker run --rm -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
+
+sonar:
+    sonar-scanner.bat -Dproject.settings=sonar-scanner.properties
 
 deploy:  ## 🚀 Deploy to Azure Web App 
 	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table
