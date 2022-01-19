@@ -9,7 +9,7 @@ AZURE_REGION ?= uksouth
 AZURE_SITE_NAME ?= pythonapp-$(shell git rev-parse --short HEAD)
 
 # Used by `test-api` target
-TEST_HOST ?= 127.0.01:5000
+TEST_HOST ?= 127.0.0.1:5000
 
 # Don't change
 SRC_DIR := src
@@ -20,7 +20,7 @@ SRC_DIR := src
 help:  ## 💬 This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-lint: venv  ## 🔎 Lint & format, will not fix but sets exit code on error 
+lint: venv  ## 🔎 Lint & format, will not fix but sets exit code on error
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& black --check $(SRC_DIR) \
 	&& flake8 src/app/ && flake8 src/run.py
@@ -29,32 +29,29 @@ lint-fix: venv  ## 📜 Lint & format, will try to fix errors and modify code
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& black $(SRC_DIR)
 
-image:  ## 🔨 Build container image from Dockerfile 
+image:  ## 🔨 Build container image from Dockerfile
 	docker build . --file build/Dockerfile \
 	--tag $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
-push:  ## 📤 Push container image to registry 
+push:  ## 📤 Push container image to registry
 	docker push $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
 run: venv  ## 🏃 Run the server locally using Python & Flask
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& python src/run.py
 
-run-docker:venv  ## 🏃 Run the server locally using Python & Flask
-    docker run --rm -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
+run-docker: venv  ## 🏃 Run the server locally using Python & Flask
+	docker run --rm -d -it -p 5000:5000 $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
-sonar:
-    sonar-scanner.bat -Dproject.settings=sonar-scanner.properties
-
-deploy:  ## 🚀 Deploy to Azure Web App 
+deploy:  ## 🚀 Deploy to Azure Web App
 	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table
 	az deployment group create --template-file deploy/webapp.bicep \
 		--resource-group $(AZURE_RES_GROUP) \
 		--parameters webappName=$(AZURE_SITE_NAME) \
-		--parameters webappImage=$(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG) -o table 
+		--parameters webappImage=$(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG) -o table
 	@echo "### 🚀 Web app deployed to https://$(AZURE_SITE_NAME).azurewebsites.net/"
 
-undeploy:  ## 💀 Remove from Azure 
+undeploy:  ## 💀 Remove from Azure
 	@echo "### WARNING! Going to delete $(AZURE_RES_GROUP) 😲"
 	az group delete -n $(AZURE_RES_GROUP) -o table --no-wait
 
@@ -70,7 +67,7 @@ test-report: venv  ## 🎯 Unit tests for Flask app (with report output)
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& pytest -v --junitxml=test-results.xml
 
-test-api: .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running 
+test-api: .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running
 	cd tests \
 	&& npm install newman \
 	&& ./node_modules/.bin/newman run ./postman_collection.json --env-var apphost=$(TEST_HOST)
