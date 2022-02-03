@@ -2,6 +2,15 @@
 
 This CI pipeline will automate CI for a container-based python application.In this pipeline, an image will be released to docker hub after the automated tests pass at different stages.
 
+ # Triggers
+
+Configured to run on a Github Push Trigger
+
+ # Prerequisites
+
+1) Generate Github personal access token and add to Kaholo Vault
+2) Setup Slack webhook for you slack channel to send notifications
+
 # Pipeline Steps
 
 Below are the different steps in this pipeline. The pipeline is mix of parallel and sequential steps.
@@ -16,10 +25,6 @@ Below are the different steps in this pipeline. The pipeline is mix of parallel 
 8) Release - If the tests are successfull , tag and release the image to docker hub
 9) Slack - Configured for notifications at various stages
 
-
-# Triggers
-
-Configured to run on a Github Push Trigger
 
 # Plugins
 Command Line, Github, Docker, Slack

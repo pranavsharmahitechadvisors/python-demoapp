@@ -1,0 +1,6 @@
+projectKey=kaholo
+serverUrl=http://34.72.60.241:9000
+serverVersion=9.2.4.50792
+dashboardUrl=http://34.72.60.241:9000/dashboard?id=kaholo
+ceTaskId=AX5t924_v_Z4MeYraXY-
+ceTaskUrl=http://34.72.60.241:9000/api/ce/task?id=AX5t924_v_Z4MeYraXY-

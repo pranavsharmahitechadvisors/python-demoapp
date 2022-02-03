@@ -11,6 +11,11 @@ AZURE_SITE_NAME ?= pythonapp-$(shell git rev-parse --short HEAD)
 # Used by `test-api` target
 TEST_HOST ?= 127.0.0.1:5000
 
+# Used for SELENIUM TEST
+SELENIUM_HUB ?=localhost
+APP_URL ?=
+
+
 # Don't change
 SRC_DIR := src
 
@@ -62,6 +67,7 @@ test: venv  ## 🎯 Unit tests for Flask app
 test-e2e: venv  ## 🎯 Unit tests for Flask app
 	. $(SRC_DIR)/.venv/bin/activate \
 	&& python tests/tests-e2e/e2e.py
+
 
 test-report: venv  ## 🎯 Unit tests for Flask app (with report output)
 	. $(SRC_DIR)/.venv/bin/activate \
