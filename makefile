@@ -62,7 +62,7 @@ undeploy:  ## 💀 Remove from Azure
 
 test: venv  ## 🎯 Unit tests for Flask app
 	. $(SRC_DIR)/.venv/bin/activate \
-	&& pytest -v
+	&& pytest src/ -v
 
 test-e2e: venv  ## 🎯 Unit tests for Flask app
 	. $(SRC_DIR)/.venv/bin/activate \
@@ -71,7 +71,11 @@ test-e2e: venv  ## 🎯 Unit tests for Flask app
 
 test-report: venv  ## 🎯 Unit tests for Flask app (with report output)
 	. $(SRC_DIR)/.venv/bin/activate \
-	&& pytest -v --junitxml=test-results.xml
+	&& pytest src/ -v --junitxml=test-results.xml
+
+test-selenium: venv  ## 🎯 Unit tests for Flask app (with report output)
+	. $(SRC_DIR)/.venv/bin/activate \
+	&& pytest tests/ -v --html=test-results.html
 
 test-api: .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running
 	cd tests \
