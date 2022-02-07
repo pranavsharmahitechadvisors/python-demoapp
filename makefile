@@ -12,8 +12,8 @@ AZURE_SITE_NAME ?= pythonapp-$(shell git rev-parse --short HEAD)
 TEST_HOST ?= 127.0.0.1:5000
 
 # Used for SELENIUM TEST
-SELENIUM_HUB ?=localhost
-APP_URL ?=
+SELENIUM_HUB ?= 54.234.255.29
+APP_URL ?= http://35.232.205.15:5000
 
 
 # Don't change
